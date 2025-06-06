@@ -42,7 +42,7 @@ export default function Register() {
   };
 
   return (
-    <div className="min-h-screen bg-netflix-black flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-netflix-black flex flex-col justify-center py-12 sm:px-6 lg:px-8 transition-opacity duration-500 ease-in-out">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <h2 className="mt-6 text-center text-3xl font-extrabold text-netflix-white">
           Create your account
@@ -149,7 +149,7 @@ export default function Register() {
           <div className="mt-6">
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-netflix-light-gray"></div>
+                <div className="w-full border-t border-netflix-dark-gray"></div>
               </div>
               <div className="relative flex justify-center text-sm">
                 <span className="px-2 bg-netflix-dark-gray text-netflix-light-gray">
@@ -161,7 +161,7 @@ export default function Register() {
             <div className="mt-6 grid grid-cols-2 gap-3">
               <button
                 type="button"
-                className="w-full inline-flex justify-center py-2 px-4 border border-netflix-light-gray rounded-md shadow-sm bg-netflix-black text-sm font-medium text-netflix-white hover:bg-netflix-light-gray/10"
+                className="w-full inline-flex justify-center py-2 px-4 border border-netflix-dark-gray rounded-md shadow-sm bg-netflix-black text-sm font-medium text-netflix-white hover:bg-netflix-light-gray/10"
               >
                 <span className="sr-only">Sign in with GitHub</span>
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -175,7 +175,7 @@ export default function Register() {
 
               <button
                 type="button"
-                className="w-full inline-flex justify-center py-2 px-4 border border-netflix-light-gray rounded-md shadow-sm bg-netflix-black text-sm font-medium text-netflix-white hover:bg-netflix-light-gray/10"
+                className="w-full inline-flex justify-center py-2 px-4 border border-netflix-dark-gray rounded-md shadow-sm bg-netflix-black text-sm font-medium text-netflix-white hover:bg-netflix-light-gray/10"
               >
                 <span className="sr-only">Sign in with Google</span>
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">

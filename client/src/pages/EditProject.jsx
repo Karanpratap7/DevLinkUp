@@ -28,17 +28,22 @@ export default function EditProject() {
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center min-h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary-600"></div>
+      <div className="flex justify-center items-center min-h-screen bg-netflix-black">
+        <div className="netflix-spinner"></div>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="rounded-md bg-red-50 p-4">
-          <div className="text-sm text-red-700">{error}</div>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 bg-netflix-black">
+        <div className="bg-red-900/50 text-red-200 p-4 rounded-md">
+          <div className="flex items-center">
+            <svg className="h-5 w-5 mr-2 text-red-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <div className="text-sm">{error}</div>
+          </div>
         </div>
       </div>
     );
@@ -46,10 +51,10 @@ export default function EditProject() {
 
   if (!project) {
     return (
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="flex justify-center items-center min-h-screen bg-netflix-black">
         <div className="text-center">
-          <h2 className="text-2xl font-semibold text-gray-900">Project not found</h2>
-          <p className="mt-2 text-gray-500">
+          <h2 className="text-2xl font-semibold text-netflix-white mb-3">Project not found</h2>
+          <p className="mt-2 text-netflix-light-gray">
             The project you're trying to edit doesn't exist.
           </p>
         </div>
@@ -59,18 +64,16 @@ export default function EditProject() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <div className="md:flex md:items-center md:justify-between">
+      <div className="md:flex md:items-center md:justify-between mb-8">
         <div className="flex-1 min-w-0">
-          <h2 className="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">
+          <h2 className="text-2xl font-bold leading-7 text-netflix-white sm:text-3xl sm:truncate">
             Edit Project
           </h2>
         </div>
       </div>
 
-      <div className="mt-8 bg-white shadow rounded-lg">
-        <div className="px-4 py-5 sm:p-6">
-          <ProjectForm projectId={id} initialData={project} />
-        </div>
+      <div className="bg-netflix-dark-gray shadow rounded-lg p-6">
+        <ProjectForm initialData={project} />
       </div>
     </div>
   );
