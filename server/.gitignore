@@ -1,0 +1,10 @@
+# .gitignore
+
+# Node dependencies
+node_modules/
+
+# Environment variables
+.env
+
+# Test folders
+tests/

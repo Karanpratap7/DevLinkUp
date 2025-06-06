@@ -1,0 +1,37 @@
+<svg viewBox="0 0 240 120" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Red gradient definitions -->
+    <linearGradient id="redGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ef4444;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#dc2626;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="darkRedGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#dc2626;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#b91c1c;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="brightRedGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f87171;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ef4444;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Connection lines forming diamond -->
+  <line x1="60" y1="60" x2="120" y2="20" stroke="url(#redGradient)" stroke-width="4" stroke-linecap="round"/>
+  <line x1="120" y1="20" x2="180" y2="60" stroke="url(#darkRedGradient)" stroke-width="4" stroke-linecap="round"/>
+  <line x1="180" y1="60" x2="120" y2="100" stroke="url(#redGradient)" stroke-width="4" stroke-linecap="round"/>
+  <line x1="120" y1="100" x2="60" y2="60" stroke="url(#redGradient)" stroke-width="4" stroke-linecap="round"/>
+  
+  <!-- Left arrow pointing right -->
+  <path d="M 20 50 L 35 60 L 20 70 Z" fill="url(#brightRedGradient)" stroke="none"/>
+  
+  <!-- Right arrow pointing right -->
+  <path d="M 205 50 L 220 60 L 205 70 Z" fill="url(#darkRedGradient)" stroke="none"/>
+  
+  <!-- Network nodes -->
+  <circle cx="60" cy="60" r="14" fill="url(#brightRedGradient)"/>
+  <circle cx="120" cy="20" r="12" fill="url(#darkRedGradient)"/>
+  <circle cx="180" cy="60" r="14" fill="url(#darkRedGradient)"/>
+  <circle cx="120" cy="100" r="12" fill="url(#redGradient)"/>
+</svg>
