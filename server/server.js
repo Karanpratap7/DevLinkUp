@@ -9,6 +9,16 @@ dotenv.config();
 // Create Express app
 const app = express();
 
+// Debug middleware
+app.use((req, res, next) => {
+  console.log(`${req.method} ${req.url}`);
+  // Fix double slashes in URL
+  if (req.url.includes('//')) {
+    req.url = req.url.replace(/\/+/g, '/');
+  }
+  next();
+});
+
 // CORS configuration
 app.use(cors({
   origin: [
@@ -31,18 +41,20 @@ mongoose.connect(process.env.MONGODB_URI)
   .catch((err) => console.error('MongoDB connection error:', err));
 
 // Routes
+console.log('Setting up routes...');
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/users', require('./routes/users'));
 app.use('/api/projects', require('./routes/projects'));
 
 // 404 handler
 app.use((req, res, next) => {
+  console.log('404 Not Found:', req.method, req.url);
   res.status(404).json({ message: 'Route not found' });
 });
 
 // Error handling middleware
 app.use((err, req, res, next) => {
-  console.error(err.stack);
+  console.error('Error:', err.stack);
   res.status(err.status || 500).json({ 
     message: err.message || 'Something went wrong!',
     error: process.env.NODE_ENV === 'development' ? err : {}
@@ -53,4 +65,8 @@ app.use((err, req, res, next) => {
 const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
+  console.log('Available routes:');
+  console.log('- POST /api/auth/login');
+  console.log('- POST /api/auth/signup');
+  console.log('- GET /api/auth/me');
 }); 
