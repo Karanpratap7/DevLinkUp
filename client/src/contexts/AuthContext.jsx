@@ -1,7 +1,7 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001/api';
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001';
 
 const AuthContext = createContext();
 
@@ -30,7 +30,7 @@ export function AuthProvider({ children }) {
     try {
       // eslint-disable-next-line no-console
       console.log('[AuthContext] Fetching user data...');
-      const response = await axios.get(`${API_URL}/auth/me`);
+      const response = await axios.get(`${API_URL}/api/auth/me`);
       // eslint-disable-next-line no-console
       console.log('[AuthContext] User data received:', response.data);
       setCurrentUser(response.data);
@@ -48,7 +48,7 @@ export function AuthProvider({ children }) {
   const login = async (email, password) => {
     try {
       setLoading(true);
-      const response = await axios.post(`${API_URL}/auth/login`, {
+      const response = await axios.post(`${API_URL}/api/auth/login`, {
         email,
         password,
       });
@@ -69,7 +69,7 @@ export function AuthProvider({ children }) {
   const register = async (name, email, password) => {
     try {
       setLoading(true);
-      const response = await axios.post(`${API_URL}/auth/signup`, {
+      const response = await axios.post(`${API_URL}/api/auth/signup`, {
         name,
         email,
         password,

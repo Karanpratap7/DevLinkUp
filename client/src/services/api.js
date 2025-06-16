@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // Use environment variable or fallback to localhost:5001
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001/api';
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001';
 
 // Create axios instance with default config
 const api = axios.create({
@@ -9,6 +9,7 @@ const api = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
+  withCredentials: true
 });
 
 // Add request interceptor to add auth token
@@ -40,27 +41,27 @@ api.interceptors.response.use(
 
 // Auth API calls
 export const authAPI = {
-  login: (email, password) => api.post('/auth/login', { email, password }),
-  register: (name, email, password) => api.post('/auth/signup', { name, email, password }),
-  getCurrentUser: () => api.get('/auth/me'),
+  login: (email, password) => api.post('/api/auth/login', { email, password }),
+  register: (name, email, password) => api.post('/api/auth/signup', { name, email, password }),
+  getCurrentUser: () => api.get('/api/auth/me'),
 };
 
 // User API calls
 export const userAPI = {
-  getUser: (userId) => api.get(`/users/${userId}`),
-  getProfile: (userId) => api.get(`/users/${userId}`),
-  updateUser: (userId, data) => api.put(`/users/${userId}`, data),
-  getAllUsers: () => api.get('/users'),
+  getUser: (userId) => api.get(`/api/users/${userId}`),
+  getProfile: (userId) => api.get(`/api/users/${userId}`),
+  updateUser: (userId, data) => api.put(`/api/users/${userId}`, data),
+  getAllUsers: () => api.get('/api/users'),
 };
 
 // Project API calls
 export const projectAPI = {
-  getAllProjects: () => api.get('/projects'),
-  getProject: (projectId) => api.get(`/projects/${projectId}`),
-  createProject: (data) => api.post('/projects', data),
-  updateProject: (projectId, data) => api.put(`/projects/${projectId}`, data),
-  deleteProject: (projectId) => api.delete(`/projects/${projectId}`),
-  getUserProjects: (userId) => api.get(`/projects/user/${userId}`),
+  getAllProjects: () => api.get('/api/projects'),
+  getProject: (projectId) => api.get(`/api/projects/${projectId}`),
+  createProject: (data) => api.post('/api/projects', data),
+  updateProject: (projectId, data) => api.put(`/api/projects/${projectId}`, data),
+  deleteProject: (projectId) => api.delete(`/api/projects/${projectId}`),
+  getUserProjects: (userId) => api.get(`/api/projects/user/${userId}`),
 };
 
 export default api; 
