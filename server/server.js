@@ -20,7 +20,7 @@ app.use((req, res, next) => {
 });
 
 // CORS configuration
-app.use(cors({
+const corsOptions = {
   origin: [
     'http://localhost:5173',
     'http://localhost:5174',
@@ -30,7 +30,16 @@ app.use(cors({
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
-}));
+  exposedHeaders: ['Content-Type', 'Authorization'],
+  preflightContinue: false,
+  optionsSuccessStatus: 204
+};
+
+// Apply CORS middleware
+app.use(cors(corsOptions));
+
+// Handle preflight requests
+app.options('*', cors(corsOptions));
 
 // Middleware
 app.use(express.json());
