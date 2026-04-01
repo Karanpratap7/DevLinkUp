@@ -58,6 +58,10 @@ export default function Profile() {
         // eslint-disable-next-line no-console
         console.log('[Profile] profileRes', profileRes);
         if (!profileRes.data) {
+          if (!currentUser) {
+            navigate('/login');
+            return;
+          }
           throw new Error('No profile data received');
         }
         setProfile(profileRes.data);
@@ -86,13 +90,13 @@ export default function Profile() {
       }
     };
     fetchProfileAndProjects();
-  }, [id, currentUser, authLoading, navigate]);
+  }, [id, currentUser?._id, authLoading, navigate]);
 
   // Show loading state while auth is loading
   if (authLoading || loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-netflix-black">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-netflix-red"></div>
+        <div role="status" className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-netflix-red"></div>
       </div>
     );
   }

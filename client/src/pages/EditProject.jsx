@@ -1,11 +1,10 @@
 import { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { projectAPI } from '../services/api';
 import ProjectForm from '../components/ProjectForm';
 
 export default function EditProject() {
   const { id } = useParams();
-  const navigate = useNavigate();
   const [project, setProject] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -17,7 +16,7 @@ export default function EditProject() {
       try {
         const response = await projectAPI.getProject(id);
         setProject(response.data);
-      } catch (err) {
+      } catch {
         setError('Failed to fetch project');
       } finally {
         setLoading(false);

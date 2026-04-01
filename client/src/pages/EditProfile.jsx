@@ -1,11 +1,9 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { userAPI } from '../services/api';
 import ProfileForm from '../components/ProfileForm';
 import { useAuth } from '../contexts/AuthContext';
 
 export default function EditProfile() {
-  const navigate = useNavigate();
   const { currentUser } = useAuth();
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);

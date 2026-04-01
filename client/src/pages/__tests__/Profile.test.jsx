@@ -121,9 +121,9 @@ describe('Profile Component', () => {
     // Debug output
     // eslint-disable-next-line no-console
     console.log(document.body.innerHTML);
-    // Use findByText with a function matcher for robustness
-    expect(await screen.findByText((content) => content.includes('React'))).toBeInTheDocument();
-    expect(await screen.findByText((content) => content.includes('Node.js'))).toBeInTheDocument();
+    // Use findAllByText with a function matcher for robustness (skills appear in both Skills and project techStack)
+    expect((await screen.findAllByText((content) => content.includes('React'))).length).toBeGreaterThan(0);
+    expect((await screen.findAllByText((content) => content.includes('Node.js'))).length).toBeGreaterThan(0);
   });
 
   it('renders projects when available', async () => {
