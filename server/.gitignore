@@ -6,5 +6,5 @@ node_modules/
 # Environment variables
 .env
 
-# Test folders
-tests/
+# Test output
+coverage/

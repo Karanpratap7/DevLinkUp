@@ -9,6 +9,11 @@ const auth = require('../middleware/auth');
 // @access  Public
 router.get('/', userController.getAllUsers);
 
+// @route   GET api/users/search
+// @desc    Search users by skills
+// @access  Public
+router.get('/search', userController.searchUsersBySkills);
+
 // @route   GET api/users/:id
 // @desc    Get user by ID
 // @access  Public
@@ -28,10 +33,5 @@ router.put(
   ],
   userController.updateProfile
 );
-
-// @route   GET api/users/search
-// @desc    Search users by skills
-// @access  Public
-router.get('/search', userController.searchUsersBySkills);
 
 module.exports = router; 
