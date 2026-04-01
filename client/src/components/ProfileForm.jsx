@@ -43,7 +43,7 @@ const ProfileForm = ({ initialData }) => {
     setSuccess('');
 
     try {
-      await userAPI.updateProfile(initialData._id, formData);
+      await userAPI.updateProfile(formData);
       setSuccess('Profile updated successfully!');
       setTimeout(() => {
         navigate(`/profile/${initialData._id}`);

@@ -80,6 +80,7 @@ export const authAPI = {
 export const userAPI = {
   getUser: (userId) => api.get(`api/users/${userId}`),
   getProfile: (userId) => api.get(`api/users/${userId}`),
+  updateProfile: (data) => api.put('api/users/profile', data),
   updateUser: (userId, data) => api.put(`api/users/${userId}`, data),
   getAllUsers: () => api.get('api/users'),
 };
