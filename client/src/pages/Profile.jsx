@@ -96,7 +96,7 @@ export default function Profile() {
   if (authLoading || loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-netflix-black">
-        <div role="status" className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-netflix-red"></div>
+        <div role="status" aria-label="Loading profile" className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-netflix-red"></div>
       </div>
     );
   }

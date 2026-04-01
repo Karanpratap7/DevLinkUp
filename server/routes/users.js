@@ -1,8 +1,17 @@
 const express = require('express');
 const { check } = require('express-validator');
+const rateLimit = require('express-rate-limit');
 const router = express.Router();
 const userController = require('../controllers/userController');
 const auth = require('../middleware/auth');
+
+const searchLimiter = rateLimit({
+  windowMs: 60 * 1000,
+  max: 30,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { message: 'Too many requests, please try again later.' },
+});
 
 // @route   GET api/users
 // @desc    Get all users
@@ -12,7 +21,7 @@ router.get('/', userController.getAllUsers);
 // @route   GET api/users/search
 // @desc    Search users by skills
 // @access  Public
-router.get('/search', userController.searchUsersBySkills);
+router.get('/search', searchLimiter, userController.searchUsersBySkills);
 
 // @route   GET api/users/:id
 // @desc    Get user by ID
