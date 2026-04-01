@@ -59,6 +59,9 @@ describe('Auth Routes', () => {
       expect(res.statusCode).toBe(201);
       expect(res.body).toHaveProperty('token');
       expect(res.body.user.email).toBe('alice@example.com');
+      // _id must be returned (not 'id') so the client can use currentUser._id immediately
+      expect(res.body.user).toHaveProperty('_id');
+      expect(res.body.user).not.toHaveProperty('id');
     });
 
     it('rejects duplicate email', async () => {
@@ -117,6 +120,9 @@ describe('Auth Routes', () => {
       expect(res.statusCode).toBe(200);
       expect(res.body).toHaveProperty('token');
       expect(res.body.user.email).toBe('test@example.com');
+      // _id must be returned (not 'id') so the client can use currentUser._id immediately
+      expect(res.body.user).toHaveProperty('_id');
+      expect(res.body.user).not.toHaveProperty('id');
     });
 
     it('rejects wrong password', async () => {

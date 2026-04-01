@@ -47,7 +47,6 @@ export function AuthProvider({ children }) {
 
   const login = async (email, password) => {
     try {
-      setLoading(true);
       const response = await axios.post(`${API_URL}/api/auth/login`, {
         email,
         password,
@@ -61,14 +60,11 @@ export function AuthProvider({ children }) {
     } catch (error) {
       setError(error.response?.data?.message || 'An error occurred');
       throw error;
-    } finally {
-      setLoading(false);
     }
   };
 
   const register = async (name, email, password) => {
     try {
-      setLoading(true);
       const response = await axios.post(`${API_URL}/api/auth/signup`, {
         name,
         email,
@@ -83,8 +79,6 @@ export function AuthProvider({ children }) {
     } catch (error) {
       setError(error.response?.data?.message || 'An error occurred');
       throw error;
-    } finally {
-      setLoading(false);
     }
   };
 
