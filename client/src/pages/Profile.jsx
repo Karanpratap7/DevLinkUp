@@ -13,50 +13,23 @@ export default function Profile() {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    // Debug output
-    // eslint-disable-next-line no-console
-    console.log('[Profile] useEffect', { 
-      id, 
-      currentUser, 
-      authLoading,
-      hasToken: !!localStorage.getItem('token'),
-      currentUserId: currentUser?._id 
-    });
     const fetchProfileAndProjects = async () => {
       if (authLoading) {
-        // eslint-disable-next-line no-console
-        console.log('[Profile] authLoading true, returning');
         return;
       }
       setLoading(true);
       setError('');
       try {
-        // Wait for auth to be ready
         if (!currentUser && !id) {
-          // eslint-disable-next-line no-console
-          console.log('[Profile] No currentUser and no id, waiting for auth...');
           return;
         }
         const userId = id || currentUser?._id;
-        // eslint-disable-next-line no-console
-        console.log('[Profile] Attempting to fetch with userId:', userId);
         if (!userId) {
-          // eslint-disable-next-line no-console
-          console.log('[Profile] No userId available. Current state:', {
-            id,
-            currentUser,
-            authLoading,
-            hasToken: !!localStorage.getItem('token')
-          });
           setError('Please log in to view your profile or provide a valid user ID');
           setLoading(false);
           return;
         }
-        // eslint-disable-next-line no-console
-        console.log('[Profile] Fetching user', userId);
         const profileRes = await userAPI.getUser(userId);
-        // eslint-disable-next-line no-console
-        console.log('[Profile] profileRes', profileRes);
         if (!profileRes.data) {
           if (!currentUser) {
             navigate('/login');
@@ -66,30 +39,25 @@ export default function Profile() {
         }
         setProfile(profileRes.data);
         try {
-          // eslint-disable-next-line no-console
-          console.log('[Profile] Fetching projects for', userId);
           const projectsRes = await projectAPI.getUserProjects(userId);
-          // eslint-disable-next-line no-console
-          console.log('[Profile] projectsRes', projectsRes);
           setProjects(Array.isArray(projectsRes.data) ? projectsRes.data : []);
         } catch (projectsErr) {
-          // eslint-disable-next-line no-console
           console.error('[Profile] Error fetching projects:', projectsErr);
           setProjects([]);
         }
       } catch (err) {
-        // eslint-disable-next-line no-console
         console.error('[Profile] Error fetching profile data:', err);
         setError(err.response?.data?.message || err.message || 'Failed to fetch profile or projects');
         setProfile(null);
         setProjects([]);
       } finally {
         setLoading(false);
-        // eslint-disable-next-line no-console
-        console.log('[Profile] setLoading(false)');
       }
     };
     fetchProfileAndProjects();
+  // Using currentUser?._id (primitive) instead of currentUser (object) to avoid infinite
+  // re-renders caused by a new object reference on every render.
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, currentUser?._id, authLoading, navigate]);
 
   // Show loading state while auth is loading

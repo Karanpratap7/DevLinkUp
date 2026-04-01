@@ -5,6 +5,7 @@ const API_URL = (import.meta.env.VITE_API_URL || 'http://localhost:5001').replac
 
 const AuthContext = createContext();
 
+// eslint-disable-next-line react-refresh/only-export-components
 export function useAuth() {
   return useContext(AuthContext);
 }
@@ -16,8 +17,6 @@ export function AuthProvider({ children }) {
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    // eslint-disable-next-line no-console
-    console.log('[AuthContext] Initializing with token:', !!token);
     if (token) {
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
       fetchUser();
@@ -28,15 +27,10 @@ export function AuthProvider({ children }) {
 
   const fetchUser = async () => {
     try {
-      // eslint-disable-next-line no-console
-      console.log('[AuthContext] Fetching user data...');
       const response = await axios.get(`${API_URL}/api/auth/me`);
-      // eslint-disable-next-line no-console
-      console.log('[AuthContext] User data received:', response.data);
       setCurrentUser(response.data);
     } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error('[AuthContext] Error fetching user:', error);
+      console.error('[AuthContext] Failed to restore session:', error);
       localStorage.removeItem('token');
       delete axios.defaults.headers.common['Authorization'];
       setCurrentUser(null);

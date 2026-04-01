@@ -239,11 +239,8 @@ describe('AuthContext', () => {
       await waitFor(() =>
         expect(screen.getByTestId('loading').textContent).toBe('false')
       );
-      const { login } = screen.getByTestId('login-btn').__reactFiber
-        ? {} // not accessible this way
-        : {};
-      // Verify by calling login directly through a test component
-      // (covered by Login.test.jsx which mocks useAuth — see note below)
+      // re-throws so the Login page can show its own error message
+      // (covered by Login.test.jsx which mocks useAuth)
     });
   });
 

@@ -31,12 +31,10 @@ export default function Discover() {
       setLoading(true);
       setError('');
       try {
-        console.log('[Discover] Fetching data...');
         const [usersRes, projectsRes] = await Promise.all([
           userAPI.getAllUsers(),
           projectAPI.getAllProjects(),
         ]);
-        console.log('[Discover] Data received:', { users: usersRes.data, projects: projectsRes.data });
         setDevelopers(Array.isArray(usersRes.data) ? usersRes.data : []);
         setProjects(Array.isArray(projectsRes.data) ? projectsRes.data : []);
       } catch (err) {

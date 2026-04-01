@@ -7,6 +7,7 @@ exports.getAllUsers = async (req, res) => {
     const users = await User.find().select('-password');
     res.json(users);
   } catch (error) {
+    console.error('Get all users error:', error);
     res.status(500).json({ message: 'Server error' });
   }
 };
@@ -20,6 +21,7 @@ exports.getUserById = async (req, res) => {
     }
     res.json(user);
   } catch (error) {
+    console.error('Get user by ID error:', error);
     res.status(500).json({ message: 'Server error' });
   }
 };
@@ -52,11 +54,10 @@ exports.updateProfile = async (req, res) => {
 
     res.json(user);
   } catch (error) {
+    console.error('Update profile error:', error);
     res.status(500).json({ message: 'Server error' });
   }
 };
-
-// Search users by skills
 exports.searchUsersBySkills = async (req, res) => {
   try {
     const { skills } = req.query;
@@ -71,6 +72,7 @@ exports.searchUsersBySkills = async (req, res) => {
 
     res.json(users);
   } catch (error) {
+    console.error('Search users by skills error:', error);
     res.status(500).json({ message: 'Server error' });
   }
 }; 

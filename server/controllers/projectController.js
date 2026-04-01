@@ -140,11 +140,10 @@ exports.getUserProjects = async (req, res) => {
       .sort({ createdAt: -1 });
     res.json(projects);
   } catch (error) {
+    console.error('Get user projects error:', error);
     res.status(500).json({ message: 'Server error' });
   }
 };
-
-// Search projects by tech stack
 exports.searchProjectsByTech = async (req, res) => {
   try {
     const { tech } = req.query;
@@ -161,6 +160,7 @@ exports.searchProjectsByTech = async (req, res) => {
 
     res.json(projects);
   } catch (error) {
+    console.error('Search projects by tech error:', error);
     res.status(500).json({ message: 'Server error' });
   }
 }; 
