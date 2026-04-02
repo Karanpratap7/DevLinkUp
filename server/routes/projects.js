@@ -1,8 +1,17 @@
 const express = require('express');
 const { check } = require('express-validator');
+const rateLimit = require('express-rate-limit');
 const router = express.Router();
 const projectController = require('../controllers/projectController');
 const auth = require('../middleware/auth');
+
+const mutationLimiter = rateLimit({
+  windowMs: 60 * 1000,
+  max: 30,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { message: 'Too many requests, please try again later.' },
+});
 
 // @route   GET api/projects
 // @desc    Get all projects
@@ -59,6 +68,6 @@ router.put(
 // @route   DELETE api/projects/:id
 // @desc    Delete project
 // @access  Private
-router.delete('/:id', auth, projectController.deleteProject);
+router.delete('/:id', mutationLimiter, auth, projectController.deleteProject);
 
 module.exports = router; 

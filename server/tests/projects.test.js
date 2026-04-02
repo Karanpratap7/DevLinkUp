@@ -25,6 +25,7 @@ const mockProjectData = {
   githubUrl: 'https://github.com/test/project',
   demoUrl: 'https://demo.example.com',
   owner: { toString: () => 'user123' },
+  deleteOne: jest.fn().mockResolvedValue({}),
 };
 
 jest.mock('../models/User', () => {
@@ -322,7 +323,6 @@ describe('Project Routes', () => {
   describe('DELETE /api/projects/:id', () => {
     it('deletes project the user owns', async () => {
       Project.findById.mockResolvedValue(mockProjectData);
-      Project.findByIdAndDelete.mockResolvedValue(mockProjectData);
       const res = await request(app)
         .delete(`/api/projects/${VALID_OID}`)
         .set('Authorization', `Bearer ${token}`);

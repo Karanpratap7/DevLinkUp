@@ -64,6 +64,9 @@ userSchema.methods.comparePassword = async function(candidatePassword) {
   return bcrypt.compare(candidatePassword, this.password);
 };
 
+// Index for frequently-queried field
+userSchema.index({ skills: 1 });
+
 const User = mongoose.model('User', userSchema);
 
 module.exports = User; 

@@ -121,7 +121,7 @@ exports.deleteProject = async (req, res) => {
       return res.status(401).json({ message: 'Not authorized' });
     }
 
-    await Project.findByIdAndDelete(req.params.id);
+    await project.deleteOne();
     res.status(200).json({ message: 'Project deleted' });
   } catch (error) {
     console.error('Delete project error:', error);

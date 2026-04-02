@@ -117,7 +117,9 @@ export default function ProjectDetail() {
   }
 
   // project.owner may be a populated object or a plain string/ObjectId depending on context
-  const ownerId = project.owner?._id ?? project.owner;
+  const ownerId = typeof project.owner === 'object' && project.owner !== null
+    ? project.owner._id
+    : project.owner;
   const isOwner = currentUser && ownerId?.toString() === currentUser._id?.toString();
 
   return (

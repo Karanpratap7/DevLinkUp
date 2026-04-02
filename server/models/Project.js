@@ -48,6 +48,11 @@ projectSchema.pre('save', function(next) {
   next();
 });
 
+// Compound index covers getUserProjects (filter by owner + sort by createdAt)
+projectSchema.index({ owner: 1, createdAt: -1 });
+// Covers searchProjectsByTech ($in on techStack)
+projectSchema.index({ techStack: 1 });
+
 const Project = mongoose.model('Project', projectSchema);
 
 module.exports = Project; 
