@@ -25,7 +25,7 @@ export default function Project() {
         } else {
           setCreator(null);
         }
-      } catch (err) {
+      } catch {
         setError('Failed to fetch project or creator');
       } finally {
         setLoading(false);
@@ -39,7 +39,7 @@ export default function Project() {
     try {
       await projectAPI.deleteProject(id);
       navigate('/dashboard');
-    } catch (err) {
+    } catch {
       setError('Failed to delete project');
     }
   };

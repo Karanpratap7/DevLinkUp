@@ -100,9 +100,6 @@ describe('Profile Component', () => {
       logout: vi.fn(),
     });
     renderProfile();
-    // Debug output
-    // eslint-disable-next-line no-console
-    console.log(document.body.innerHTML);
     // Use findByText for async rendering
     expect(await screen.findByText('Test User')).toBeInTheDocument();
     expect(await screen.findByText('test@example.com')).toBeInTheDocument();
@@ -118,12 +115,9 @@ describe('Profile Component', () => {
       logout: vi.fn(),
     });
     renderProfile();
-    // Debug output
-    // eslint-disable-next-line no-console
-    console.log(document.body.innerHTML);
-    // Use findByText with a function matcher for robustness
-    expect(await screen.findByText((content) => content.includes('React'))).toBeInTheDocument();
-    expect(await screen.findByText((content) => content.includes('Node.js'))).toBeInTheDocument();
+    // Use findAllByText with a function matcher for robustness (skills appear in both Skills and project techStack)
+    expect((await screen.findAllByText((content) => content.includes('React'))).length).toBeGreaterThan(0);
+    expect((await screen.findAllByText((content) => content.includes('Node.js'))).length).toBeGreaterThan(0);
   });
 
   it('renders projects when available', async () => {
@@ -135,9 +129,6 @@ describe('Profile Component', () => {
       logout: vi.fn(),
     });
     renderProfile();
-    // Debug output
-    // eslint-disable-next-line no-console
-    console.log(document.body.innerHTML);
     // Use findByText with a function matcher for robustness
     expect(await screen.findByText((content) => content.includes('Test Project'))).toBeInTheDocument();
     expect(await screen.findByText((content) => content.includes('Test description'))).toBeInTheDocument();
@@ -176,9 +167,6 @@ describe('Profile Component', () => {
     });
     projectAPI.getUserProjects.mockResolvedValue({ data: [] });
     renderProfile();
-    // Debug output
-    // eslint-disable-next-line no-console
-    console.log(document.body.innerHTML);
     await waitFor(() => {
       expect(screen.getByText('No projects found')).toBeInTheDocument();
     });

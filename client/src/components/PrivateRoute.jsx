@@ -15,7 +15,7 @@ export default function PrivateRoute({ children }) {
   }
 
   // If not loading and no user, redirect to login
-  if (!loading && !currentUser) {
+  if (!currentUser) {
     // Save the attempted url for redirecting after login
     return <Navigate to="/login" state={{ from: location }} replace />;
   }

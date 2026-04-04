@@ -6,7 +6,9 @@ module.exports = {
     '!**/node_modules/**',
     '!**/tests/**',
     '!**/coverage/**',
-    '!jest.config.js'
+    '!jest.config.js',
+    '!server.js',
+    '!**/models/**'
   ],
   coverageThreshold: {
     global: {

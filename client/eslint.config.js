@@ -5,6 +5,27 @@ import reactRefresh from 'eslint-plugin-react-refresh'
 
 export default [
   { ignores: ['dist'] },
+  // CommonJS config files (Tailwind)
+  {
+    files: ['tailwind.config.js'],
+    languageOptions: {
+      ecmaVersion: 2020,
+      globals: { ...globals.node },
+      sourceType: 'commonjs',
+    },
+  },
+  // Node ES-module config files (Vite, PostCSS)
+  {
+    files: ['vite.config.js', 'postcss.config.js'],
+    languageOptions: {
+      ecmaVersion: 2020,
+      globals: { ...globals.node, ...globals.browser },
+      parserOptions: {
+        ecmaVersion: 'latest',
+        sourceType: 'module',
+      },
+    },
+  },
   {
     files: ['**/*.{js,jsx}'],
     languageOptions: {

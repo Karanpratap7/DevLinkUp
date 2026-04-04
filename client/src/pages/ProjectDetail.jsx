@@ -22,15 +22,13 @@ export default function ProjectDetail() {
       setLoading(true);
       setError('');
       try {
-        console.log('[ProjectDetail] Fetching project:', id);
         const response = await projectAPI.getProject(id);
-        console.log('[ProjectDetail] Project data:', response.data);
         if (!response.data) {
           throw new Error('No project data received');
         }
         setProject(response.data);
       } catch (err) {
-        console.error('[ProjectDetail] Error:', err);
+        console.error('[ProjectDetail] Error fetching project:', err);
         setError(
           err.response?.data?.message || 
           err.message || 
@@ -118,7 +116,11 @@ export default function ProjectDetail() {
     );
   }
 
-  const isOwner = currentUser && currentUser._id === project.owner;
+  // project.owner may be a populated object or a plain string/ObjectId depending on context
+  const ownerId = typeof project.owner === 'object' && project.owner !== null
+    ? project.owner._id
+    : project.owner;
+  const isOwner = currentUser && ownerId?.toString() === currentUser._id?.toString();
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">

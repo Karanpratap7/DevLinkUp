@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import { userAPI } from '../services/api';
 
 const ProfileForm = ({ initialData }) => {
@@ -44,7 +43,7 @@ const ProfileForm = ({ initialData }) => {
     setSuccess('');
 
     try {
-      await userAPI.updateProfile(initialData._id, formData);
+      await userAPI.updateProfile(formData);
       setSuccess('Profile updated successfully!');
       setTimeout(() => {
         navigate(`/profile/${initialData._id}`);

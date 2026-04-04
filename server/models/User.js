@@ -51,28 +51,21 @@ userSchema.pre('save', async function(next) {
     return next();
   }
   try {
-    console.log('Hashing password for user:', this.email);
     const salt = await bcrypt.genSalt(10);
     this.password = await bcrypt.hash(this.password, salt);
     next();
   } catch (error) {
-    console.error('Error hashing password:', error);
     next(error);
   }
 });
 
 // Method to compare password
 userSchema.methods.comparePassword = async function(candidatePassword) {
-  try {
-    console.log('Comparing password for user:', this.email);
-    const isMatch = await bcrypt.compare(candidatePassword, this.password);
-    console.log('Password match result:', isMatch);
-    return isMatch;
-  } catch (error) {
-    console.error('Error comparing password:', error);
-    throw error;
-  }
+  return bcrypt.compare(candidatePassword, this.password);
 };
+
+// Index for frequently-queried field
+userSchema.index({ skills: 1 });
 
 const User = mongoose.model('User', userSchema);
 

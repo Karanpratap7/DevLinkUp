@@ -9,15 +9,8 @@ dotenv.config();
 // Create Express app
 const app = express();
 
-// Debug middleware
-app.use((req, res, next) => {
-  console.log(`${req.method} ${req.url}`);
-  // Fix double slashes in URL
-  if (req.url.includes('//')) {
-    req.url = req.url.replace(/\/+/g, '/');
-  }
-  next();
-});
+// Middleware
+app.use(express.json());
 
 // CORS configuration
 const corsOptions = {
@@ -41,23 +34,18 @@ app.use(cors(corsOptions));
 // Handle preflight requests
 app.options('*', cors(corsOptions));
 
-// Middleware
-app.use(express.json());
-
 // Database connection
 mongoose.connect(process.env.MONGODB_URI)
   .then(() => console.log('Connected to MongoDB'))
   .catch((err) => console.error('MongoDB connection error:', err));
 
 // Routes
-console.log('Setting up routes...');
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/users', require('./routes/users'));
 app.use('/api/projects', require('./routes/projects'));
 
 // 404 handler
-app.use((req, res, next) => {
-  console.log('404 Not Found:', req.method, req.url);
+app.use((req, res) => {
   res.status(404).json({ message: 'Route not found' });
 });
 
@@ -74,8 +62,4 @@ app.use((err, req, res, next) => {
 const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
-  console.log('Available routes:');
-  console.log('- POST /api/auth/login');
-  console.log('- POST /api/auth/signup');
-  console.log('- GET /api/auth/me');
 }); 

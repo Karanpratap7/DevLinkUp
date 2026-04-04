@@ -24,36 +24,15 @@ api.interceptors.request.use(
     if (config.url) {
       config.url = config.url.replace(/^\/+/, '');
     }
-    // Debug log the request
-    console.log('Making request:', {
-      method: config.method,
-      url: `${config.baseURL}/${config.url}`,
-      headers: config.headers,
-      data: config.data
-    });
     return config;
   },
-  (error) => {
-    console.error('Request error:', error);
-    return Promise.reject(error);
-  }
+  (error) => Promise.reject(error)
 );
 
 // Add response interceptor to handle errors
 api.interceptors.response.use(
-  (response) => {
-    console.log('Response received:', {
-      status: response.status,
-      data: response.data
-    });
-    return response;
-  },
+  (response) => response,
   (error) => {
-    console.error('Response error:', {
-      status: error.response?.status,
-      data: error.response?.data,
-      message: error.message
-    });
     if (error.response?.status === 401) {
       // Handle unauthorized access
       localStorage.removeItem('token');
@@ -65,22 +44,15 @@ api.interceptors.response.use(
 
 // Auth API calls
 export const authAPI = {
-  login: (email, password) => {
-    console.log('Login attempt:', { email });
-    return api.post('api/auth/login', { email, password });
-  },
-  register: (name, email, password) => {
-    console.log('Register attempt:', { name, email });
-    return api.post('api/auth/signup', { name, email, password });
-  },
+  login: (email, password) => api.post('api/auth/login', { email, password }),
+  register: (name, email, password) => api.post('api/auth/signup', { name, email, password }),
   getCurrentUser: () => api.get('api/auth/me'),
 };
 
 // User API calls
 export const userAPI = {
   getUser: (userId) => api.get(`api/users/${userId}`),
-  getProfile: (userId) => api.get(`api/users/${userId}`),
-  updateUser: (userId, data) => api.put(`api/users/${userId}`, data),
+  updateProfile: (data) => api.put('api/users/profile', data),
   getAllUsers: () => api.get('api/users'),
 };
 
