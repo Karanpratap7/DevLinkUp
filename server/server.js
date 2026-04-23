@@ -25,8 +25,8 @@ const corsOptions = {
     // Allow non-browser requests (e.g., curl/Postman) that don't send Origin.
     if (!origin) return callback(null, true);
 
-    const isAllowedPreview = /^https:\/\/dev-link-.*\.vercel\.app$/.test(origin);
-    if (allowedOrigins.has(origin) || isAllowedPreview) {
+    const isAllowedVercelDeployment = /^https:\/\/dev-link-[a-z0-9-]+\.vercel\.app$/i.test(origin);
+    if (allowedOrigins.has(origin) || isAllowedVercelDeployment) {
       return callback(null, true);
     }
 
