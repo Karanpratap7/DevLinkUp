@@ -13,13 +13,25 @@ const app = express();
 app.use(express.json());
 
 // CORS configuration
+const allowedOrigins = new Set([
+  'http://localhost:5173',
+  'http://localhost:5174',
+  'https://dev-link-up.vercel.app',
+  'https://devlinkup-8ufw.onrender.com'
+]);
+
 const corsOptions = {
-  origin: [
-    'http://localhost:5173',
-    'http://localhost:5174',
-    'https://dev-link-up.vercel.app',
-    'https://devlinkup-8ufw.onrender.com'
-  ],
+  origin(origin, callback) {
+    // Allow non-browser requests (e.g., curl/Postman) that don't send Origin.
+    if (!origin) return callback(null, true);
+
+    const isAllowedPreview = /^https:\/\/dev-link-.*\.vercel\.app$/.test(origin);
+    if (allowedOrigins.has(origin) || isAllowedPreview) {
+      return callback(null, true);
+    }
+
+    return callback(new Error('Not allowed by CORS'));
+  },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
