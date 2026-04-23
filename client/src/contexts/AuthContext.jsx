@@ -15,6 +15,15 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
+  const getApiErrorMessage = (err) => {
+    const responseData = err?.response?.data;
+    if (responseData?.message) return responseData.message;
+    if (Array.isArray(responseData?.errors) && responseData.errors.length > 0) {
+      return responseData.errors[0].msg || 'An error occurred';
+    }
+    return 'An error occurred';
+  };
+
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
@@ -52,7 +61,7 @@ export function AuthProvider({ children }) {
       setError('');
       return user;
     } catch (error) {
-      setError(error.response?.data?.message || 'An error occurred');
+      setError(getApiErrorMessage(error));
       throw error;
     }
   };
@@ -71,7 +80,7 @@ export function AuthProvider({ children }) {
       setError('');
       return user;
     } catch (error) {
-      setError(error.response?.data?.message || 'An error occurred');
+      setError(getApiErrorMessage(error));
       throw error;
     }
   };

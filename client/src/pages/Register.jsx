@@ -14,6 +14,15 @@ export default function Register() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
+  const getApiErrorMessage = (err) => {
+    const responseData = err?.response?.data;
+    if (responseData?.message) return responseData.message;
+    if (Array.isArray(responseData?.errors) && responseData.errors.length > 0) {
+      return responseData.errors[0].msg || 'Failed to create account';
+    }
+    return 'Failed to create account';
+  };
+
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -35,7 +44,7 @@ export default function Register() {
       await register(formData.name, formData.email, formData.password);
       navigate('/dashboard');
     } catch (err) {
-      setError(err.response?.data?.message || 'Failed to create account');
+      setError(getApiErrorMessage(err));
     } finally {
       setLoading(false);
     }
